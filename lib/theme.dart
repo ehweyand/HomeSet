@@ -26,7 +26,6 @@ ThemeData lightThemeData(BuildContext context) {
 }
 
 ThemeData darkThemeData(BuildContext context) {
-  // Por padrão, o flutter nos fornece um tema light e dark.
   // Modificações personalizadas
   return ThemeData.dark().copyWith(
     primaryColor: kPrimaryColor,

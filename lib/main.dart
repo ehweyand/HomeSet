@@ -1,5 +1,7 @@
+import './screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'providers/auth.dart';
 
 import 'theme.dart';
 
@@ -10,33 +12,20 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HomeSet',
-      theme: lightThemeData(context),
-      darkTheme: darkThemeData(context),
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
-      routes: {},
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('HomeSet'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Hello World',
-            ),
-          ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
         ),
+      ],
+      child: MaterialApp(
+        title: 'HomeSet',
+        themeMode: ThemeMode.system,
+        theme: lightThemeData(context),
+        darkTheme: darkThemeData(context),
+        debugShowCheckedModeBanner: false,
+        home: AuthScreen(),
+        routes: {},
       ),
     );
   }
