@@ -9,7 +9,7 @@ class Auth with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
-  static const String _apiKey = 'Your API Key';
+  static const String _apiKey = 'AIzaSyDLp3EJm1xFVZhOVM4_9o3c6w1zqNa3QRo';
 
   bool get isAuth {
     return token != null;

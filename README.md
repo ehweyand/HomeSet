@@ -1,3 +1,3 @@
 ## HomeSet
 
-App desenvolvido durante a disciplinad e Projeto Integrador III.
+App desenvolvido durante a disciplina de Projeto Integrador III.

@@ -104,7 +104,7 @@ class _AuthCardState extends State<AuthCard> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred'),
+        title: Text('Ocorreu um erro.'),
         content: Text(message),
         actions: [
           FlatButton(
@@ -144,24 +144,23 @@ class _AuthCardState extends State<AuthCard> {
         );
       }
     } on HttpException catch (error) {
-      var errorMessage = 'Authentication failed';
+      var errorMessage = 'Autenticação falhou.';
 
       //padrão de mensagens de erros provenientes do firebase
       if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = 'This email address is already in use.';
+        errorMessage = 'O email já está em uso.';
       } else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address.';
+        errorMessage = 'O email não é válido.';
       } else if (error.toString().contains('WEAK_PASSWORD')) {
-        errorMessage = 'This password is too weak.';
+        errorMessage = 'A senha é muito fraca.';
       } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Could not find a user with that email.';
+        errorMessage = 'Não foi possível encontrar um usuário com este e-mail.';
       } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invalid password.';
+        errorMessage = 'Senha inválida.';
       }
       _showErrorDialog(errorMessage);
     } catch (error) {
-      const errorMessage =
-          'Could not authenticate you. Please try again later.';
+      const errorMessage = 'Não foi possível autenticar. Tente mais tarde.';
       _showErrorDialog(errorMessage);
     }
 
@@ -206,7 +205,7 @@ class _AuthCardState extends State<AuthCard> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
+                      return 'Email inválido!';
                     }
                     return null;
                   },
@@ -215,12 +214,12 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(labelText: 'Senha'),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
+                      return 'Senha é muito curta!';
                     }
                   },
                   onSaved: (value) {
@@ -230,12 +229,12 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    decoration: InputDecoration(labelText: 'Confirmar Senha'),
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
                             if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
+                              return 'As senhas não batem!';
                             }
                           }
                         : null,
@@ -247,8 +246,8 @@ class _AuthCardState extends State<AuthCard> {
                   CircularProgressIndicator()
                 else
                   RaisedButton(
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                    child: Text(
+                        _authMode == AuthMode.Login ? 'Entrar' : 'Registrar'),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -260,7 +259,7 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 FlatButton(
                   child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      '${_authMode == AuthMode.Login ? 'Registrar' : 'Entrar'}'),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
