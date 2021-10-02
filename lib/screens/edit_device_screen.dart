@@ -60,50 +60,6 @@ class _EditDeviceScreenState extends State<EditDeviceScreen> {
     super.dispose();
   }
 
-  // método executado ao clicar em salvar na appbar
-  /*Future<void> _saveForm() async {
-    //disparar as validações
-    final isValid = _form.currentState.validate();
-    if (!isValid) {
-      return; //não válido - não prossegue
-    }
-    // salvar o form - ativa um método em cada input - atualiza o editedDevice
-    _form.currentState.save();
-    setState(() {
-      _isLoading = true;
-    });
-
-    if (_editedDevice.id != null) {
-      await Provider.of<Devices>(context, listen: false)
-          .updateDevice(_editedDevice.id, _editedDevice);
-    } else {
-      try {
-        await Provider.of<Devices>(context, listen: false)
-            .addDevice(_editedDevice);
-      } catch (error) {
-        await showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text('Ocorreu um erro!'),
-            content: Text('Alguma coisa errada aconteceu.'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Okay'),
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-              )
-            ],
-          ),
-        );
-      }
-    }
-    setState(() {
-      _isLoading = false;
-    });
-    Navigator.of(context).pop();
-  }*/
-
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
