@@ -7,27 +7,7 @@ import '../constants.dart';
 import 'device.dart';
 
 class Devices with ChangeNotifier {
-  List<Device> _items = [
-    // Device(
-    //   id: '1',
-    //   model: 'Lâmpada inteligente Positivo',
-    //   description: 'Uma lâmpada inteligente para sua casa conectada!',
-    //   power: false,
-    // ),
-    // Device(
-    //   id: '2',
-    //   model: 'Módulo relê',
-    //   description:
-    //       'Môdulo relê muito utilizado para conectar dispositivos como umidificadores à energia.',
-    //   power: false,
-    // ),
-    // Device(
-    //   id: '3',
-    //   model: 'HC-SR04',
-    //   description: 'Sensor de baixo custo utilizado para medir distâncias.',
-    //   power: false,
-    // ),
-  ];
+  List<Device> _items = [];
 
   //Para vincular os devices cadastrados ao usuário - posteriormente
   /*
@@ -87,6 +67,7 @@ class Devices with ChangeNotifier {
           'power': device.power,
         }),
       );
+      print(response.body);
       //Só executa após o await terminar - bloco then invisível
       final newDevice = Device(
         model: device.model,
