@@ -1,3 +1,4 @@
+import 'package:HomeSet/providers/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +8,7 @@ import '../providers/scenes.dart';
 import '../providers/devices.dart';
 
 import './edit_device_screen.dart';
-import './edit_environment_screen.dart';
+import 'edit_device_category_screen.dart';
 
 class ScenesOverviewScreen extends StatefulWidget {
   @override
@@ -55,6 +56,7 @@ class _ScenesOverviewScreenState extends State<ScenesOverviewScreen> {
     if (_isInit) {
       // Fetch de todos os dados necessários do firebase
       Provider.of<Devices>(context).fetchAndSetDevices();
+      Provider.of<Categories>(context).fetchAndSetCategories();
     }
     _isInit = false;
     super.didChangeDependencies();

@@ -33,7 +33,6 @@ class Devices with ChangeNotifier {
       final response = await http.get(url);
       //para o dart entender o retorno do firebase
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      print(extractedData);
 
       final List<Device> loadedDevices = [];
 
