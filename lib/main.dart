@@ -1,3 +1,4 @@
+import 'package:HomeSet/providers/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,8 @@ import './screens/auth_screen.dart';
 import './screens/scenes_overview_screen.dart';
 import './screens/user_devices_screen.dart';
 import './screens/edit_device_screen.dart';
+import './screens/general_devices_categories_screen.dart';
+import './screens/edit_device_category_screen.dart';
 
 // Others
 import 'theme.dart';
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Devices(),
           ),
+          ChangeNotifierProvider.value(
+            value: Categories(),
+          ),
         ],
         child: Consumer<Auth>(
           builder: (ctx, auth, _) => MaterialApp(
@@ -43,6 +49,10 @@ class MyApp extends StatelessWidget {
             routes: {
               UserDevicesScreen.routeName: (ctx) => UserDevicesScreen(),
               EditDeviceScreen.routeName: (ctx) => EditDeviceScreen(),
+              GeneralDevicesCategoriesScreen.routeName: (ctx) =>
+                  GeneralDevicesCategoriesScreen(),
+              EditDeviceCategoryScreen.routeName: (ctx) =>
+                  EditDeviceCategoryScreen(),
             },
           ),
         ));

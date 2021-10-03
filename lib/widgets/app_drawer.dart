@@ -1,3 +1,4 @@
+import 'package:HomeSet/screens/general_devices_categories_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/user_devices_screen.dart';
@@ -27,6 +28,15 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserDevicesScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.architecture),
+            title: Text('Categorias disponíveis'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(
+                  GeneralDevicesCategoriesScreen.routeName);
             },
           ),
         ],
