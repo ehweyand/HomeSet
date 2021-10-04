@@ -17,7 +17,7 @@ import './screens/general_devices_categories_screen.dart';
 import './screens/edit_device_category_screen.dart';
 
 // Others
-import 'theme.dart';
+import './providers/theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,16 +32,20 @@ class MyApp extends StatelessWidget {
             value: Auth(),
           ),
           ChangeNotifierProvider.value(
+            value: ThemeProvider(),
+          ),
+          ChangeNotifierProvider.value(
             value: Devices(),
           ),
           ChangeNotifierProvider.value(
             value: Categories(),
           ),
         ],
-        child: Consumer<Auth>(
-          builder: (ctx, auth, _) => MaterialApp(
+        // existem vários consumers, 2, 3, 4, dependendo de quantos providers vai usar
+        child: Consumer2<Auth, ThemeProvider>(
+          builder: (ctx, auth, themeProvider, _) => MaterialApp(
             title: 'HomeSet',
-            themeMode: ThemeMode.system,
+            themeMode: themeProvider.themeMode,
             theme: lightThemeData(context),
             darkTheme: darkThemeData(context),
             debugShowCheckedModeBanner: false,
