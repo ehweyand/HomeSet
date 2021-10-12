@@ -112,7 +112,7 @@ class _EditDeviceScreenState extends State<EditDeviceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edição de dispositivos'),
+        title: Text('Edição de dispositivo'),
         //a ação de salvar o form ficará até o momento exclusiva de um iconbutton na appbar
         actions: [
           IconButton(

@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';
+import '../widgets/scenes_grid.dart';
 
 import '../providers/scenes.dart';
 import '../providers/devices.dart';
 
-import './edit_device_screen.dart';
-import 'edit_device_category_screen.dart';
+import '../screens/edit_scene_screen.dart';
+
+enum FilterOptions {
+  Favorites,
+  All,
+}
 
 class ScenesOverviewScreen extends StatefulWidget {
   @override
@@ -19,37 +24,8 @@ class _ScenesOverviewScreenState extends State<ScenesOverviewScreen> {
   var _isInit = true;
   var _isLoading = false;
 
-  //
-  // @override
-  // void initState() {
-  // Provider.of<Scenes>(context, listen: false).fetchAndSetScenes();
-  // com listen: false para não precisar usar o didChangeDependencies
-  // Ou
-  // Future.delayed(Duration.zero).then((_) {
-  //   Provider.of<Scenes>(context).fetchAndSetScenes();
-  // });
-  // super.initState();
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     setState(() {
-  //       //para atualizar a UI
-  //       _isLoading = true;
-  //     });
-  //     //fetch data
-  //     Provider.of<Scenes>(context).fetchAndSetScenes().then((_) {
-  //       setState(() {
-  //         //para atualizar a UI
-  //         _isLoading = false;
-  //       });
-  //     });
-  //   }
-
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
+  // Filtro de favoritos
+  var _showOnlyFavorites = false;
 
   @override
   void didChangeDependencies() {
@@ -57,6 +33,15 @@ class _ScenesOverviewScreenState extends State<ScenesOverviewScreen> {
       // Fetch de todos os dados necessários do firebase
       Provider.of<Devices>(context).fetchAndSetDevices();
       Provider.of<Categories>(context).fetchAndSetCategories();
+      // Para aparecer as cenas, manipular a tela de loading...
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Scenes>(context).fetchAndSetScenes().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -68,26 +53,22 @@ class _ScenesOverviewScreenState extends State<ScenesOverviewScreen> {
       appBar: AppBar(
         title: const Text('Suas cenas'),
         actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.of(context).pushNamed(EditDeviceScreen.routeName);
-          //   },
-          //   icon: const Icon(Icons.wb_incandescent_sharp),
-          //   tooltip: 'Dispositivos',
-          // ),
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.of(context).pushNamed(EditEnvironmentScreen.routeName);
-          //   },
-          //   icon: const Icon(Icons.apartment_rounded),
-          //   tooltip: 'Ambientes',
-          // ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(EditSceneScreen.routeName);
+            },
+            icon: const Icon(Icons.add),
+            tooltip: 'Criar nova cena',
+          ),
         ],
       ),
       drawer: AppDrawer(),
-      body: Center(
-        child: Text('Suas cenas aqui!'),
-      ),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          //widget personalizado, depois pode ser incrementado para mostrar apenas favoritos ou outros filtros.
+          : ScenesGrid(),
     );
   }
 }
