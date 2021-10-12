@@ -4,13 +4,13 @@ import 'package:provider/provider.dart';
 
 // Providers
 import './providers/auth.dart';
-import './providers/device.dart';
 import './providers/devices.dart';
 import './providers/scenes.dart';
 
 //Screens
 import './screens/auth_screen.dart';
 import './screens/scenes_overview_screen.dart';
+import './screens/edit_scene_screen.dart';
 import './screens/user_devices_screen.dart';
 import './screens/edit_device_screen.dart';
 import './screens/general_devices_categories_screen.dart';
@@ -35,6 +35,9 @@ class MyApp extends StatelessWidget {
             value: ThemeProvider(),
           ),
           ChangeNotifierProvider.value(
+            value: Scenes(),
+          ),
+          ChangeNotifierProvider.value(
             value: Devices(),
           ),
           ChangeNotifierProvider.value(
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
                   GeneralDevicesCategoriesScreen(),
               EditDeviceCategoryScreen.routeName: (ctx) =>
                   EditDeviceCategoryScreen(),
+              EditSceneScreen.routeName: (ctx) => EditSceneScreen(),
             },
           ),
         ));
