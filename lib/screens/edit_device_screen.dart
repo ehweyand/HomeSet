@@ -158,7 +158,8 @@ class _EditDeviceScreenState extends State<EditDeviceScreen> {
                           id: _editedDevice.id,
                           model: value,
                           description: _editedDevice.description,
-                          power: _editedDevice.power,
+                          requested_power_state:
+                              _editedDevice.requested_power_state,
                         );
                       },
                       //o que o botão de confirmar do teclado touch irá fazer
@@ -187,7 +188,8 @@ class _EditDeviceScreenState extends State<EditDeviceScreen> {
                           id: _editedDevice.id,
                           model: _editedDevice.model,
                           description: value,
-                          power: _editedDevice.power,
+                          requested_power_state:
+                              _editedDevice.requested_power_state,
                         );
                       },
                       //o
