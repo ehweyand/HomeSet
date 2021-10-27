@@ -10,27 +10,27 @@ class Device with ChangeNotifier {
   final String id;
   final String model;
   final String description;
-  bool power;
+  bool requested_power_state;
 
   Device({
     @required this.id,
     @required this.model,
     @required this.description,
     //valor default é false
-    this.power = false,
+    this.requested_power_state = false,
   });
 
-  /// Toggles On and Off the power of the device. Also, notifies all listeners about the changes.
+  /// Toggles On and Off the requested_power_state of the device. Also, notifies all listeners about the changes.
   void _setOnOff(bool newValue) {
-    power = newValue;
+    requested_power_state = newValue;
     notifyListeners();
   }
 
-  /// Communicates with firebase's database to change the actual power status of the device.
+  /// Communicates with firebase's database to change the actual requested_power_state status of the device.
   /// Work in progress...
   Future<void> toggleOnOff(String token, String userId) async {
-    final oldStatus = power;
-    power = !power;
+    final oldStatus = requested_power_state;
+    requested_power_state = !requested_power_state;
     notifyListeners();
     final url = Uri.https('flutter-update.firebaseio.com',
         '/userFavorites/$userId/$id.json?auth=$token');
@@ -38,7 +38,7 @@ class Device with ChangeNotifier {
       final response = await http.put(
         url,
         body: json.encode(
-          power,
+          requested_power_state,
         ),
       );
       if (response.statusCode >= 400) {

@@ -42,7 +42,7 @@ class Devices with ChangeNotifier {
           id: deviceId,
           model: deviceData['model'],
           description: deviceData['description'],
-          power: deviceData['power'],
+          requested_power_state: deviceData['power'],
         ));
       });
       _items = loadedDevices;
@@ -55,6 +55,7 @@ class Devices with ChangeNotifier {
 
   //async sempre retorna um future - permite omitir o then e o catch
   Future<void> addDevice(Device device) async {
+    //exemplo devices_log/-MkA1cAXZuQW5ITG7Hhl/power, valor
     var url = Uri.https(firebaseUrl, 'devices.json');
     try {
       // Poderia adicionar o header como metadata necessários para API
@@ -63,7 +64,7 @@ class Devices with ChangeNotifier {
         body: json.encode({
           'model': device.model,
           'description': device.description,
-          'power': device.power,
+          'requested_power_state': device.requested_power_state,
         }),
       );
       print(response.body);
@@ -71,7 +72,7 @@ class Devices with ChangeNotifier {
       final newDevice = Device(
         model: device.model,
         description: device.description,
-        power: false,
+        requested_power_state: false,
         //id gerada no firebase
         id: json.decode(response.body)['name'],
       );
