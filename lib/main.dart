@@ -15,6 +15,7 @@ import './screens/user_devices_screen.dart';
 import './screens/edit_device_screen.dart';
 import './screens/general_devices_categories_screen.dart';
 import './screens/edit_device_category_screen.dart';
+import './screens/scene_management_screen.dart';
 
 // Others
 import './providers/theme.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
               EditDeviceCategoryScreen.routeName: (ctx) =>
                   EditDeviceCategoryScreen(),
               EditSceneScreen.routeName: (ctx) => EditSceneScreen(),
+              SceneManagementScreen.routeName: (ctx) => SceneManagementScreen(),
             },
           ),
         ));
