@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/scenes.dart';
 
+import 'device_selection_screen.dart';
+
 class SceneManagementScreen extends StatelessWidget {
   static const routeName = '/scene-management';
 
@@ -15,10 +17,6 @@ class SceneManagementScreen extends StatelessWidget {
       context,
       listen: false,
     ).findById(sceneId);
-
-    // Debug
-    print(sceneId);
-    print(loadedScene);
 
     // A tela em si
     return Scaffold(
@@ -59,8 +57,20 @@ class SceneManagementScreen extends StatelessWidget {
                 softWrap: true,
               ),
             ),
+            Text('GRID DE DISPOSITIVOS'),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Navigator.of(context)
+              .pushNamed(DeviceSelectionScreen.routeName, arguments: sceneId);
+        },
       ),
     );
   }

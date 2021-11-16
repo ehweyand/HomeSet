@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
 import '../models/http_exception.dart';
 
 class Device with ChangeNotifier {
@@ -28,6 +29,7 @@ class Device with ChangeNotifier {
 
   /// Communicates with firebase's database to change the actual requested_power_state status of the device.
   /// Work in progress...
+  /*
   Future<void> toggleOnOff(String token, String userId) async {
     final oldStatus = requested_power_state;
     requested_power_state = !requested_power_state;
@@ -48,4 +50,6 @@ class Device with ChangeNotifier {
       _setOnOff(oldStatus);
     }
   }
+  */
+
 }
