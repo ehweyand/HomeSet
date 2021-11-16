@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/scene.dart';
 
+import '../screens/scene_management_screen.dart';
+
 class SceneItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,11 +15,12 @@ class SceneItem extends StatelessWidget {
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            // Navega para a tela de detalhes da cena e apresenta as configurações possíveis lá
-            /*Navigator.of(context).pushNamed(
-              SceneDetailScreen.routeName,
-              arguments: scene.id,
-            );*/
+            // Navega para a tela de configuracoes da cena e apresenta as configurações possíveis lá
+            Navigator.of(context).pushNamed(
+              SceneManagementScreen.routeName,
+              arguments: scene
+                  .id, // id para recuperar os dados da respectiva cena pela rota
+            );
           },
           child: Image.network(
             'https://cdn.pixabay.com/photo/2016/06/01/17/43/house-1429409_1280.png',

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import './providers/auth.dart';
 import './providers/devices.dart';
 import './providers/scenes.dart';
+import './providers/scene_devices.dart';
 
 //Screens
 import './screens/auth_screen.dart';
@@ -15,6 +16,8 @@ import './screens/user_devices_screen.dart';
 import './screens/edit_device_screen.dart';
 import './screens/general_devices_categories_screen.dart';
 import './screens/edit_device_category_screen.dart';
+import './screens/scene_management_screen.dart';
+import './screens/device_selection_screen.dart';
 
 // Others
 import './providers/theme.dart';
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
             value: Devices(),
           ),
           ChangeNotifierProvider.value(
+            value: SceneDevices(),
+          ),
+          ChangeNotifierProvider.value(
             value: Categories(),
           ),
         ],
@@ -61,6 +67,8 @@ class MyApp extends StatelessWidget {
               EditDeviceCategoryScreen.routeName: (ctx) =>
                   EditDeviceCategoryScreen(),
               EditSceneScreen.routeName: (ctx) => EditSceneScreen(),
+              SceneManagementScreen.routeName: (ctx) => SceneManagementScreen(),
+              DeviceSelectionScreen.routeName: (ctx) => DeviceSelectionScreen(),
             },
           ),
         ));
