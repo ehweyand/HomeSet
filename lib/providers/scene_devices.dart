@@ -1,3 +1,4 @@
+import 'package:HomeSet/providers/device.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
@@ -9,6 +10,8 @@ import '../models/scene_device.dart';
 import '../models/http_exception.dart';
 
 class SceneDevices with ChangeNotifier {
+  static const persistenceArrayName = "sceneDevices";
+
   // armazenamento local
   List<SceneDevice> _items = [];
 
@@ -17,20 +20,22 @@ class SceneDevices with ChangeNotifier {
     return [..._items];
   }
 
-  Future<void> linkToScene(String sceneId, String deviceId) async {
-    final url = Uri.https(firebaseUrl, '/sceneDevices/$sceneId.json');
+  Future<void> linkToScene(String sceneId, Device device) async {
+    final url = Uri.https(firebaseUrl, '/$persistenceArrayName/$sceneId.json');
 
     try {
       final response = await http.post(
         url,
         body: json.encode({
-          'deviceId': deviceId,
+          'deviceId': device.id,
+          'deviceDescription': device.description,
         }),
       );
       //Só executa após o await terminar - bloco then invisível
       final newSceneDevice = SceneDevice(
         sceneId: sceneId,
-        deviceId: deviceId,
+        deviceId: device.id,
+        deviceDescription: device.description,
         //id gerada no firebase
         id: json.decode(response.body)['name'],
       );
