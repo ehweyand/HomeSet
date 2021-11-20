@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/devices.dart';
+import '../providers/scene_devices.dart';
 
 class DeviceSelectionScreen extends StatelessWidget {
   static const routeName = '/device-selection';
@@ -40,6 +41,8 @@ class DeviceSelectionScreen extends StatelessWidget {
                     trailing: IconButton(
                       onPressed: () {
                         // Enviar para o servidor o registro com o ID da cena...
+                        Provider.of<SceneDevices>(context, listen: false)
+                            .linkToScene(sceneId, devicesData.items[i]);
                       },
                       icon: Icon(Icons.add),
                       color: Theme.of(context).accentColor,
