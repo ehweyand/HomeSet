@@ -20,6 +20,31 @@ class SceneDevices with ChangeNotifier {
     return [..._items];
   }
 
+  //Busca os devices da respectiva
+  Future<void> fetchAndSetSceneDevices(String sceneId) async {
+    var url = Uri.https(firebaseUrl, '/sceneDevices/$sceneId.json');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      final List<SceneDevice> loadedSceneDevice = [];
+
+      // sceneDeviceId --> o id gerado para ligação do device com a cena
+      extractedData.forEach((sceneDeviceId, sceneDeviceData) {
+        loadedSceneDevice.add(new SceneDevice(
+          id: sceneDeviceId,
+          deviceId: sceneDeviceData['deviceId'],
+          deviceDescription: sceneDeviceData['deviceDescription'],
+          sceneId: sceneId,
+        ));
+      });
+      _items = loadedSceneDevice;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<void> linkToScene(String sceneId, Device device) async {
     final url = Uri.https(firebaseUrl, '/$persistenceArrayName/$sceneId.json');
 

@@ -6,9 +6,10 @@ class SceneDevice {
   final String deviceId;
   final String deviceDescription;
 
-  SceneDevice(
-      {@required this.id,
-      @required this.sceneId,
-      @required this.deviceId,
-      @required this.deviceDescription});
+  SceneDevice({
+    @required this.id,
+    @required this.sceneId,
+    @required this.deviceId,
+    @required this.deviceDescription,
+  });
 }
