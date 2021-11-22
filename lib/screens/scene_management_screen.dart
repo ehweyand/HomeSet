@@ -25,6 +25,7 @@ class SceneManagementScreen extends StatelessWidget {
 
     // Puxa os dados do firebase
     sceneDevicesData.fetchAndSetSceneDevices(sceneId);
+    // tem que ver uma forma de filtrar apenas por cena
 
     // A tela em si
     return Scaffold(
@@ -64,18 +65,23 @@ class SceneManagementScreen extends StatelessWidget {
               softWrap: true,
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           //List of devices related to scene
-          ListView.builder(
-            itemCount: sceneDevicesData.items.length,
-            //Cria a lista em colunas
-            itemBuilder: (_, i) => Row(
-              children: [
-                SceneDeviceItem(
-                  sceneDevicesData.items[i].id,
-                  sceneDevicesData.items[i].deviceDescription,
-                ),
-                Divider(),
-              ],
+          Expanded(
+            child: ListView.builder(
+              itemCount: sceneDevicesData.items.length,
+              //Cria a lista em colunas
+              itemBuilder: (_, i) => Column(
+                children: [
+                  SceneDeviceItem(
+                    sceneDevicesData.items[i].id,
+                    sceneDevicesData.items[i].deviceDescription,
+                  ),
+                  Divider(),
+                ],
+              ),
             ),
           ),
         ],

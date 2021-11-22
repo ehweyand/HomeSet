@@ -11,12 +11,13 @@ class SceneDeviceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final scaffold = ScaffoldMessenger.of(context);
+    // Aqui implementar uma lógica de ouvir o provider com Consumer pra ver se tá ligado ou desligado
     return ListTile(
       title: Text(description),
       leading: Icon(Icons.wifi_tethering),
       //interagir com o item
       trailing: Container(
-        width: 100,
+        width: 50,
         child: Row(
           children: [
             IconButton(
