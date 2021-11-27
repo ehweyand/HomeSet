@@ -29,20 +29,26 @@ class Device with ChangeNotifier {
 
   /// Communicates with firebase's database to change the actual requested_power_state status of the device.
   /// Work in progress...
-  /*
-  Future<void> toggleOnOff(String token, String userId) async {
+  Future<void> toggleOnOff() async {
+    // Um toggle de valor (chaveamento)
     final oldStatus = requested_power_state;
     requested_power_state = !requested_power_state;
+    // Para ele já mudar na interface
     notifyListeners();
-    final url = Uri.https('flutter-update.firebaseio.com',
-        '/userFavorites/$userId/$id.json?auth=$token');
+    // final url = Uri.https('flutter-update.firebaseio.com',
+    //     '/userFavorites/$userId/$id.json?auth=$token');
+
+    var url = Uri.https(firebaseUrl, '/devices/$id.json');
+
     try {
-      final response = await http.put(
+      // Put para ele não gerar aquela key do firebase
+      final response = await http.patch(
         url,
-        body: json.encode(
-          requested_power_state,
-        ),
+        body: json.encode({
+          'power': requested_power_state,
+        }),
       );
+      // rollback
       if (response.statusCode >= 400) {
         _setOnOff(oldStatus);
       }
@@ -50,6 +56,4 @@ class Device with ChangeNotifier {
       _setOnOff(oldStatus);
     }
   }
-  */
-
 }

@@ -3,31 +3,80 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/http_exception.dart';
+import '../models/scene_device.dart';
 import '../constants.dart';
 import 'device.dart';
 
 class Devices with ChangeNotifier {
   List<Device> _items = [];
 
-  //Para vincular os devices cadastrados ao usuário - posteriormente
-  /*
-  final String authToken;
-  final String userId;
-
-  Devices(this.authToken, this.userId, this._items);*/
-
   List<Device> get items {
     return [..._items];
   }
 
-  /* HTTP Request para persistir no firebase */
+  List<Device> _sceneRelatedDevices = [];
+
+  List<Device> get sceneRelatedDevices {
+    return [..._sceneRelatedDevices];
+  }
+
+  //Busca os devices da respectiva cena
+  Future<void> fetchAndSetSceneDevices(String sceneId) async {
+    // Puxa todos os devices
+    fetchAndSetDevices();
+
+    // busco na N:N
+    var url = Uri.https(firebaseUrl, '/sceneDevices/$sceneId.json');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      // final List<SceneDevice> loadedSceneDevices = [];
+      final List<String> catchedIds = [];
+
+      // Essa List quero retornar com os dados do device vinculado cena
+      final List<Device> loadedDevices = [];
+
+      extractedData.forEach((sceneDeviceId, sceneDeviceData) {
+        catchedIds.add(sceneDeviceData['deviceId']);
+      });
+
+      //Carregando os devices vinculados a cena
+      // Apoio
+      // extractedData.forEach((sceneDeviceId, sceneDeviceData) {
+      //   loadedSceneDevices.add(new SceneDevice(
+      //     id: sceneDeviceId,
+      //     deviceId: sceneDeviceData['deviceId'],
+      //     deviceDescription: sceneDeviceData['deviceDescription'],
+      //     sceneId: sceneId,
+      //   ));
+      // });
+
+      //-------------------------------------------------------------
+      // Aqui preciso filtrar e adicionar na segunda lista apenas os dados dos devices que constam na lista anterior
+
+      // loadedSceneDevices.forEach((element) {
+      //   var id = element.deviceId; // -MkA1cAXZuQW5ITG7Hhl
+      //   Device device = _items.firstWhere((e) => e.id == id);
+      //   loadedDevices.add(device);
+      // });
+
+      // TOP!
+      _sceneRelatedDevices =
+          _items.where((e) => catchedIds.contains(e.id)).toList();
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
 
   Device findById(String id) {
     return _items.firstWhere((device) => device.id == id);
   }
 
+  // aqui pega todos os devices.. tentar filtrar pra pegar apenas os que tem registro naquela cena...
+
   Future<void> fetchAndSetDevices() async {
-    //pode testar também Uri.parse('<url>')
     var url = Uri.https(firebaseUrl, 'devices.json');
     try {
       final response = await http.get(url);

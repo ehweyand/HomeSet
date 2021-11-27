@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/scenes.dart';
+import '../providers/devices.dart';
 import '../providers/scene_devices.dart';
 
 import '../widgets/scene_device_item.dart';
@@ -21,11 +22,11 @@ class SceneManagementScreen extends StatelessWidget {
       listen: false,
     ).findById(sceneId);
 
-    final sceneDevicesData = Provider.of<SceneDevices>(context);
+    // final sceneDevicesData = Provider.of<SceneDevices>(context);
 
     // Puxa os dados do firebase
-    sceneDevicesData.fetchAndSetSceneDevices(sceneId);
-    // tem que ver uma forma de filtrar apenas por cena
+    // sceneDevicesData.fetchAndSetSceneDevices(sceneId);
+    // tem que ver uma forma de filtrar apenas por cena...
 
     // A tela em si
     return Scaffold(
@@ -68,20 +69,38 @@ class SceneManagementScreen extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          //List of devices related to scene
           Expanded(
-            child: ListView.builder(
-              itemCount: sceneDevicesData.items.length,
-              //Cria a lista em colunas
-              itemBuilder: (_, i) => Column(
-                children: [
-                  SceneDeviceItem(
-                    sceneDevicesData.items[i].id,
-                    sceneDevicesData.items[i].deviceDescription,
-                  ),
-                  Divider(),
-                ],
-              ),
+            child: FutureBuilder(
+              future: Provider.of<Devices>(context, listen: false)
+                  .fetchAndSetSceneDevices(sceneId),
+              builder: (ctx, dataSnapshot) {
+                if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  if (dataSnapshot.error != null) {
+                    // Implemente aqui a lógica de tratamento de erro
+                    return Center(
+                      child: Text(
+                          'Nenhum dispositivo encontrado vinculado à essa cena.'),
+                    );
+                  } else {
+                    // Consome do provider
+                    return Consumer<Devices>(
+                      builder: (ctx, devicesData, child) => ListView.builder(
+                        itemCount: devicesData.sceneRelatedDevices.length,
+                        itemBuilder: (_, i) => Column(
+                          children: [
+                            SceneDeviceItem(
+                              devicesData.sceneRelatedDevices[i],
+                            ),
+                            Divider(),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                }
+              },
             ),
           ),
         ],

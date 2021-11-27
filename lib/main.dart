@@ -7,6 +7,7 @@ import './providers/auth.dart';
 import './providers/devices.dart';
 import './providers/scenes.dart';
 import './providers/scene_devices.dart';
+import './providers/device.dart';
 
 //Screens
 import './screens/auth_screen.dart';
@@ -49,6 +50,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Categories(),
           ),
+          // ChangeNotifierProvider.value(
+          //   value: Device(),
+          // ),
+          // chamo depois
         ],
         // existem vários consumers, 2, 3, 4, dependendo de quantos providers vai usar
         child: Consumer2<Auth, ThemeProvider>(

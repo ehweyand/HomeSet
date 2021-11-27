@@ -10,8 +10,6 @@ import '../models/scene_device.dart';
 import '../models/http_exception.dart';
 
 class SceneDevices with ChangeNotifier {
-  static const persistenceArrayName = "sceneDevices";
-
   // armazenamento local
   List<SceneDevice> _items = [];
 
@@ -20,7 +18,7 @@ class SceneDevices with ChangeNotifier {
     return [..._items];
   }
 
-  //Busca os devices da respectiva
+  //Busca os devices da respectiva cena
   Future<void> fetchAndSetSceneDevices(String sceneId) async {
     var url = Uri.https(firebaseUrl, '/sceneDevices/$sceneId.json');
     try {
@@ -46,7 +44,7 @@ class SceneDevices with ChangeNotifier {
   }
 
   Future<void> linkToScene(String sceneId, Device device) async {
-    final url = Uri.https(firebaseUrl, '/$persistenceArrayName/$sceneId.json');
+    final url = Uri.https(firebaseUrl, '/sceneDevices/$sceneId.json');
 
     try {
       final response = await http.post(

@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-//Único ítem da lista
+import '../providers/device.dart';
+
 class SceneDeviceItem extends StatelessWidget {
-  final String id;
-  final String description;
+  // final String id;
+  // final String description;
+  // final String deviceId;
 
-  //positional arguments
-  SceneDeviceItem(this.id, this.description);
+  // // Positional arguments
+  // SceneDeviceItem(this.id, this.description, this.deviceId);
+
+  final Device sceneDevice;
+
+  SceneDeviceItem(this.sceneDevice);
 
   @override
   Widget build(BuildContext context) {
     // final scaffold = ScaffoldMessenger.of(context);
-    // Aqui implementar uma lógica de ouvir o provider com Consumer pra ver se tá ligado ou desligado
+    print(sceneDevice.requested_power_state);
+
     return ListTile(
-      title: Text(description),
+      title: Text(sceneDevice.description),
       leading: Icon(Icons.wifi_tethering),
       //interagir com o item
       trailing: Container(
@@ -22,9 +30,11 @@ class SceneDeviceItem extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                // maybe do something, or not...
+                sceneDevice.toggleOnOff();
               },
-              icon: Icon(Icons.power),
+              icon: sceneDevice.requested_power_state
+                  ? Icon(Icons.power)
+                  : Icon(Icons.power_off_outlined),
               color: Theme.of(context).primaryColor,
             ),
           ],
