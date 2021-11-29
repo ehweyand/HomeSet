@@ -3,40 +3,35 @@ import 'package:provider/provider.dart';
 
 import '../providers/device.dart';
 
-class SceneDeviceItem extends StatelessWidget {
-  // final String id;
-  // final String description;
-  // final String deviceId;
+class SceneDeviceItem extends StatefulWidget {
+  @override
+  _SceneDeviceItemState createState() => _SceneDeviceItemState();
+}
 
-  // // Positional arguments
-  // SceneDeviceItem(this.id, this.description, this.deviceId);
-
-  final Device sceneDevice;
-
-  SceneDeviceItem(this.sceneDevice);
-
+class _SceneDeviceItemState extends State<SceneDeviceItem> {
   @override
   Widget build(BuildContext context) {
-    // final scaffold = ScaffoldMessenger.of(context);
-    print(sceneDevice.requested_power_state);
+    final device = Provider.of<Device>(context, listen: false);
 
     return ListTile(
-      title: Text(sceneDevice.description),
+      title: Text(device.description),
       leading: Icon(Icons.wifi_tethering),
       //interagir com o item
       trailing: Container(
         width: 50,
         child: Row(
           children: [
-            IconButton(
-              onPressed: () {
-                sceneDevice.toggleOnOff();
-              },
-              icon: sceneDevice.requested_power_state
-                  ? Icon(Icons.power)
-                  : Icon(Icons.power_off_outlined),
-              color: Theme.of(context).primaryColor,
-            ),
+            Consumer<Device>(
+              builder: (ctx, product, _) => IconButton(
+                onPressed: () {
+                  device.toggleOnOff();
+                },
+                icon: device.requested_power_state
+                    ? Icon(Icons.power)
+                    : Icon(Icons.power_off_outlined),
+                color: Theme.of(context).primaryColor,
+              ),
+            )
           ],
         ),
       ),

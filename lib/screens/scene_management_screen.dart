@@ -21,12 +21,11 @@ class SceneManagementScreen extends StatelessWidget {
       context,
       listen: false,
     ).findById(sceneId);
+    // Setup inicial
 
-    // final sceneDevicesData = Provider.of<SceneDevices>(context);
-
-    // Puxa os dados do firebase
-    // sceneDevicesData.fetchAndSetSceneDevices(sceneId);
-    // tem que ver uma forma de filtrar apenas por cena...
+    // final devicesData = Provider.of<Devices>(context);
+    // devicesData.fetchAndSetSceneDevices(sceneId);
+    // final devices = devicesData.sceneRelatedDevices;
 
     // A tela em si
     return Scaffold(
@@ -78,23 +77,21 @@ class SceneManagementScreen extends StatelessWidget {
                   return Center(child: CircularProgressIndicator());
                 } else {
                   if (dataSnapshot.error != null) {
-                    // Implemente aqui a lógica de tratamento de erro
+                    // Implementação de lógica de erro.
                     return Center(
                       child: Text(
-                          'Nenhum dispositivo encontrado vinculado à essa cena.'),
+                          'Nenhum dispositivo encontrado vinculado à esta cena.'),
                     );
                   } else {
-                    // Consome do provider
+                    // Encontrou algo
+                    print(dataSnapshot.data);
                     return Consumer<Devices>(
                       builder: (ctx, devicesData, child) => ListView.builder(
+                        padding: const EdgeInsets.all(10.0),
                         itemCount: devicesData.sceneRelatedDevices.length,
-                        itemBuilder: (_, i) => Column(
-                          children: [
-                            SceneDeviceItem(
-                              devicesData.sceneRelatedDevices[i],
-                            ),
-                            Divider(),
-                          ],
+                        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                          value: devicesData.sceneRelatedDevices[i],
+                          child: SceneDeviceItem(),
                         ),
                       ),
                     );
